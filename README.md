@@ -26,7 +26,8 @@
 
 <br><br>
 ## Usage
-> 이 앱을 사용하기 위해서는 opencv가 필요합니다.<br>
+> 이 프로그램을 사용하기 위해서는 opencv가 필요합니다.<br>
+> <a href="http://www.opencv.org/releases.html">http://www.opencv.org/releases.html</a><br>
 > 참고 : <a href="http://webnautes.tistory.com/716">http://webnautes.tistory.com/716</a>
 ```C
 #include<opencv2/core/core.hpp>
