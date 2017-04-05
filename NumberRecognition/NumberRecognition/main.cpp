@@ -7,71 +7,72 @@
 #define MIN(a, b) (a<b)? a:b
 #define MAX(a, b) (a>b)? a:b
 
-IplImage * src;
-CvSize size;
-int **arr;
+IplImage * src; // 입력 이미지
+CvSize size; // 이미지 크기
+int **arr; // 이미지를 2진화한 2차원 배열
 
+// 이미지의 실제크기(여백을 제외한 실제 크기)
 int realSize_x1 = 0;
 int realSize_x2 = 0;
 int realSize_y1 = 0;
 int realSize_y2 = 0;
 
-bool isHorizontalSym;
-bool isVerticalSym;
-bool isHaveHorizontalLine;
-int horizontalLocation;
-bool isHaveBlockField;
-int blockLocation;
-int centerLineNumber;
+bool isHorizontalSym; // 좌우대칭인지
+bool isVerticalSym; // 상하대칭인지
+bool isHaveHorizontalLine; // 수평선이 존재하는지
+int horizontalLocation; // 수평선의 위치 (0: 없음, 1: 상단, 2: 하단)
+bool isHaveBlockField; // 막힌 곳이 있는지
+int blockLocation; // 막힌 곳의 위치 (0: 없음, 1: 상단, 2: 하단)
+int centerLineNumber; // 중심선과 겹치는 부분의 개수
 
+// 좌우 대칭을 판별하는 함수
 bool isHorizontalSymmetry() {
 
-	int total = 0;
-	int sum = 0;
+	int total = 0; // 비교한 면적
+	int sum = 0; // 일치한 면적
 	for (int y = realSize_y1; y <= realSize_y2; y++) {
-		for (int x = realSize_x1; x <= (realSize_x1 + realSize_x2) / 2; x++) {
+		for (int x = realSize_x1; x <= (realSize_x1 + realSize_x2) / 2; x++) { // 가장 왼쪽부터 중심까지만 비교
 
-			int _x = realSize_x2 - (x - realSize_x1);
+			int _x = realSize_x2 - (x - realSize_x1); // 비교할 x좌표값을 구함
 
-			//printf("x : %d, _x : %d\n", x, _x);
-
-			if (arr[y][x] == arr[y][_x]) {
-				sum += 1;
+			if (arr[y][x] == arr[y][_x]) { // 좌측과 우측을 비교해 같으면 진입
+				sum += 1; // 일치한 면적의 값을 1증가
 			}
 
-			total += 1;
+			total += 1; // 비교한 면적의 값을 1증가
 
 		}
 	}
 
-	float percentage = ((float)sum / total);
+	float percentage = ((float)sum / total); // 비교한 면적대비 일치한 면적의 비율을 구함(일치율)
 
-	return percentage >= 0.90;
+	return percentage >= 0.90; // 일치율이 90% 이상이면 ture 아니면 false
 
 }
 
+// 상하 대칭을 판별하는 함수
 bool isVerticalSymmetry() {
 
-	int total = 0;
-	int sum = 0;
+	int total = 0; // 비교한 면적
+	int sum = 0; // 일치한 면적
 
-	for (int x = realSize_x1; x <= realSize_x2; x++) {
-		for (int y = realSize_y1; y <= (realSize_y1 + realSize_y2) / 2; y++) {
+	for (int x = realSize_x1; x <= realSize_x2; x++) { 
+		for (int y = realSize_y1; y <= (realSize_y1 + realSize_y2) / 2; y++) { // 가장 위쪽부터 중심까지만 비교
 
-			int _y = realSize_y2 - (y - realSize_y1);
+			int _y = realSize_y2 - (y - realSize_y1); // 비교할 y좌표값을 구함
 
-			if (arr[y][x] == arr[_y][x]) {
-				sum += 1;
+			if (arr[y][x] == arr[_y][x]) { // 상단과 하단을 비교해 같으면 진입
+				sum += 1; // 일치한 면적의 값을 1증가
 			}
 
-			total += 1;
+			total += 1; // 비교한 면적의 값을 1증가
 
 		}
 	}
 
-	float percentage = ((float)sum / total);
+	float percentage = ((float)sum / total); // 비교한 면적대비 일치한 면적의 비율을 구함(일치율)
 
-	return percentage >= 0.90;
+	return percentage >= 0.90; // 일치율이 90% 이상이면 true 아니면 false
 
 }
 
@@ -196,41 +197,44 @@ bool isVerticalSymmetry() {
 //
 //}
 
+// 상단에 수평선이 있는지 판별
 void findTopHorizontalLine() {
 
-	int cx = size.width / 2;
+	int cx = (realSize_x2 + realSize_x1) / 2;//size.width / 2; // 중심 x값
 	int y = 0;
 
-	int threshold = MAX(30, (realSize_x2 - realSize_x1)*0.7);
+	int threshold = MAX(30, (realSize_x2 - realSize_x1)*0.7); // 임계값을 정함(좌우로 이동해야하는 최소값)(숫자 1때문에 최소값을 30으로 설정)
 
-	bool check = false;
+	bool check = false; // 최초로 등장하는 검은부분(1)을 찾기위한 임시 변수
 
-	while (y < size.height - 1) {
+	while (y < size.height - 1) { // 가장 위쪽부터 계산
 
-		if (check == false && arr[y][cx] == 1) {
-			check = true;
+		if (check == false && arr[y][cx] == 1) { // 검은부분을 만난적이 없고, 현재 좌표가 검은부분(1)일 경우 진입
+			check = true; // 최초로 검은 부분이 등장했다고 표시
 		}
 
 		if (check) {
 
-			y += 2;
+			y += 2; // 정확성을 위해 임의로 2칸 진입
 
-			int x1 = cx;
-			int x2 = cx;
+			int x1 = cx; // 중심으로부터 좌측으로 나아갈 변수
+			int x2 = cx; // 중심으로부터 우측으로 나아갈 벼눗
 
+			// 가장 왼쪽의 흰색과 검은색의 경계점을 구할 수 있음
 			while (arr[y][x1] == 1 && x1 >= 0) {
 				x1 -= 1;
 			}
+			// 가장 오른쪽의 경계점을 구할 수 있음
 			while (arr[y][x2] == 1 && x2 < size.width) {
 				x2 += 1;
 			}
 
-			if (x2 - x1 >= threshold) {
-				horizontalLocation = 1;
-				isHaveHorizontalLine = true;
+			if (x2 - x1 >= threshold) { // 가장 좌측 경계점과 우측 경계점의 길이가 임계값보다 크다면 진입
+				horizontalLocation = 1; // 수평선의 위치가 상단임을 표시
+				isHaveHorizontalLine = true; // 수평선이 있음을 표시
 			}
 
-			return;
+			return; // 상단의 수평선만 확인하면 되므로 반환
 
 		}
 
@@ -239,9 +243,11 @@ void findTopHorizontalLine() {
 
 }
 
+// 하단에 수평선이 있는지 판별
+// 상단 수평선 판별과 비슷하나 y값이 하단부터 시작
 void findBottomHorizontalLine() {
 
-	int cx = size.width / 2;
+	int cx = (realSize_x2 + realSize_x1) / 2; // size.width / 2;
 	int y = size.height - 1;
 
 	int threshold = MAX(30, (realSize_x2 - realSize_x1)*0.7);
@@ -317,7 +323,7 @@ bool findBlockField() {
 
 	int count = 0;
 	bool isBlock = true;
-	int cx = size.width / 2;
+	int cx = (realSize_x2 + realSize_x1) / 2; // size.width / 2;
 	int y = 0;
 
 	bool check = false;
@@ -372,7 +378,7 @@ int findCenterCount() {
 
 	int count = 0;
 	bool isBlock = true;
-	int cx = size.width / 2;
+	int cx = (realSize_x2 + realSize_x1) / 2; // size.width / 2;
 	int y = 0;
 
 	bool check = false;
@@ -403,6 +409,7 @@ int findCenterCount() {
 
 }
 
+// 숫자의 실제 영역을 찾음
 void findRealSize() {
 
 	int x1, x2, y1, y2;
@@ -411,6 +418,7 @@ void findRealSize() {
 	y1 = size.height;
 	y2 = 0;
 
+	// 상하좌우 최소 최대값을 추출
 	for (int y = 0; y < size.height; y++) {
 		for (int x = 0; x < size.width; x++) {
 
@@ -445,6 +453,7 @@ void findRealSize() {
 
 }
 
+// 계산에 필요한 값 초기화
 void init() {
 
 	src = NULL;
@@ -547,41 +556,43 @@ void checkNumber() {
 
 void loadImage(char * fileName) {
 
-	src = cvLoadImage(fileName);
-	size = cvGetSize(src);
+	src = cvLoadImage(fileName); // 그림을 입력받음
+	size = cvGetSize(src); // 그림의 크기를 구함
 
 	printf("input : %s\n", fileName);
 
+	// 그림 사이즈와 동일한 크기의 2차원 동적배열 선언(그림을 '2진화'하기 위해)
 	arr = (int**)malloc(sizeof(int*)*size.height);
 	for (int i = 0; i < size.height; i++) {
 		arr[i] = (int*)malloc(sizeof(int)*size.width);
 	}
 
+	// 그림 전체를 반복
 	for (int y = 0; y < size.height; y++) {
 		for (int x = 0; x < size.width; x++) {
 
-			CvScalar color = cvGet2D(src, y, x);
+			CvScalar color = cvGet2D(src, y, x); // 해당 픽셀의 색
 
 			if (color.val[0] == 255 && color.val[1] == 255 && color.val[2] == 255) {
-				arr[y][x] = 0;
+				arr[y][x] = 0; // 흰색일 경우 0으로 표시
 			}
 			else {
-				arr[y][x] = 1;
+				arr[y][x] = 1; // 흰색이 아닐 경우(옅은회색, 검은색 등) 일괄 1로 표시
 			}
 
 		}
 	}
 
-	findRealSize();
+	findRealSize(); // 여백을 제외한 실제 크기를 찾음
 
-	isHorizontalSym = isHorizontalSymmetry();
-	isVerticalSym = isVerticalSymmetry();
-	findTopHorizontalLine();
-	findBottomHorizontalLine();
-	isHaveBlockField = findBlockField();
-	centerLineNumber = findCenterCount();
+	isHorizontalSym = isHorizontalSymmetry(); // 좌우대칭 판변
+	isVerticalSym = isVerticalSymmetry(); // 상하대칭 판별
+	findTopHorizontalLine(); // 상단 수평선이 있는지 판별
+	findBottomHorizontalLine(); // 하단 수평선이 있는지 판별
+	isHaveBlockField = findBlockField(); // 막힌 부분이 있는지 판별
+	centerLineNumber = findCenterCount(); // 중심선에 걸치는 부분이 몇개인지 판별
 
-	checkNumber();
+	checkNumber(); // 계산한 값을 토대로 숫자인식
 
 }
 
