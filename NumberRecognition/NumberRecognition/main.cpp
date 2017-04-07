@@ -471,7 +471,6 @@ void init() {
 	isHaveBlockField = false;
 	blockLocation = 0;
 	centerLineNumber = 0;
-
 }
 
 void printfCurrentNumber() {
@@ -501,7 +500,74 @@ void checkNumber() {
 	int centerLineNumber;
 	*/
 
-	if (centerLineNumber == 1) {
+	if (isHaveBlockField) {
+
+		if (blockLocation == 2) {
+			printf("에상 숫자 : 6\n");
+			return;
+		}
+		else {
+
+			if (isHaveHorizontalLine) {
+				printf("예상 숫자 : 4\n");
+				return;
+			}
+			else {
+				if (!isHorizontalSym) {
+					printf("예상 숫자 : 9\n");
+					return;
+				}
+				else {
+
+					if (isVerticalSym) {
+						printf("예상 숫자 : 0\n");
+						return;
+					}
+					else {
+						printf("예상 숫자 : 8\n");
+						return;
+					}
+
+				}
+			}
+
+		}
+
+	}
+	else {
+
+		if (centerLineNumber == 1) {
+			printf("예상 숫자 : 1\n");
+			return;
+		}
+		else {
+
+			if (!isHaveHorizontalLine) {
+				printf("예상 숫자 : 3\n");
+				return;
+			}
+			else {
+				if (horizontalLocation == 2) {
+					printf("예상 숫자 : 2\n");
+					return;
+				}
+				else {
+					if (centerLineNumber == 3) {
+						printf("예상 숫자 : 5\n");
+						return;
+					}
+					else {
+						printf("예상 숫자 : 7\n");
+						return;
+					}
+				}
+			}
+
+		}
+
+	}
+
+	/*if (centerLineNumber == 1) {
 		printf("예상 숫자 : 1\n");
 		return;
 	}
@@ -549,7 +615,7 @@ void checkNumber() {
 	if (isVerticalSym == true && isHorizontalSym == true) {
 		printf("예상 숫자 : 0\n");
 		return;
-	}
+	}*/
 
 	printf("찾지 못함\n");
 }
