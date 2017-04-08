@@ -76,131 +76,10 @@ bool isVerticalSymmetry() {
 
 }
 
-//int findHorizontalLine() {
-//
-//	int line = 0;
-//
-//	int height = size.height;
-//	int * check = (int*)malloc(sizeof(int)*height);
-//	int c = 0;
-//
-//	for (int i = 0; i < height; i++) {
-//		check[i] = 0;
-//	}
-//
-//	FILE *f;
-//	f = fopen("b.txt", "w");
-//
-//	int threshold = MAX(30, (realSize_x2 - realSize_x1)*0.7);
-//	//int threshold = 30;
-//	//printf("threshold : %d\n", threshold);
-//
-//	for (int y = 0; y < size.height; y++) {
-//		int sum = 0;
-//		int min_x = size.width, max_x = 0;
-//
-//		bool isIn = false;
-//		for (int x = 0; x < size.width; x++) {
-//
-//			if (arr[y][x] == 1) {
-//				isIn = true;
-//				if (x < min_x) {
-//					min_x = x;
-//				}
-//
-//				if (x > max_x) {
-//					max_x = x;
-//				}
-//			}
-//			/*if (arr[y][x] == 1 && arr[y][x + 1] == 1) {
-//			sum += 1;
-//			}*/
-//
-//		}
-//
-//		if (!isIn) {
-//			check[c] = 0;
-//			c += 1;
-//			continue;
-//		}
-//
-//		if (max_x - min_x < threshold) {
-//
-//			min_x = 0;
-//			max_x = size.width;
-//
-//		}
-//
-//		bool chk = false;
-//		for (int x = min_x; x < max_x; x++) {
-//
-//			if (chk == false && arr[y][x] == 1) {
-//				chk = true;
-//			}
-//			else if (chk == true && arr[y][x] == 0) {
-//				chk = false;
-//				break;
-//			}
-//
-//			/*if (arr[y][x] == 0) {
-//			chk = false;
-//			break;
-//			}*/
-//
-//		}
-//
-//		if (chk) {
-//			check[c] = 1;
-//		}
-//		else {
-//			check[c] = 0;
-//		}
-//		c += 1;
-//	}
-//
-//	int sum = 0;
-//	for (int i = 0; i < height - 1; i++) {
-//		//printf("%d\n", check[i]);
-//		fprintf(f, "%d\n", check[i]);
-//		if (check[i] == 1 && check[i + 1] == 1) {
-//			sum += 1;
-//		}
-//		else {
-//			if (sum > 4) {
-//				line += 1;
-//				if (i < height / 2) {
-//					horizontalLocation = 1;
-//					//printf("상\n");
-//					return line;
-//				}
-//				else {
-//					horizontalLocation = 2;
-//					//printf("하\n");
-//					return line;
-//				}
-//			}
-//			sum = 0;
-//		}
-//	}
-//
-//	if (sum > 10) {
-//		line += 1;
-//		horizontalLocation = 2;
-//		//printf("하\n");
-//		return line;
-//	}
-//	sum = 0;
-//
-//	fclose(f);
-//
-//	return line;
-//
-//}
-
 // 상단에 수평선이 있는지 판별
 void findTopHorizontalLine() {
 
-	int cx = (realSize_x2 + realSize_x1) / 2;//size.width / 2; // 중심 x값
+	int cx = (realSize_x2 + realSize_x1) / 2;
 	int y = 0;
 
 	int threshold = MAX(30, (realSize_x2 - realSize_x1)*0.7); // 임계값을 정함(좌우로 이동해야하는 최소값)(숫자 1때문에 최소값을 30으로 설정)
@@ -247,7 +126,7 @@ void findTopHorizontalLine() {
 // 상단 수평선 판별과 비슷하나 y값이 하단부터 시작
 void findBottomHorizontalLine() {
 
-	int cx = (realSize_x2 + realSize_x1) / 2; // size.width / 2;
+	int cx = (realSize_x2 + realSize_x1) / 2;
 	int y = size.height - 1;
 
 	int threshold = MAX(30, (realSize_x2 - realSize_x1)*0.7);
@@ -366,10 +245,6 @@ bool findBlockField() {
 		y += 1;
 	}
 
-
-
-
-
 	return isBlock;
 
 }
@@ -378,7 +253,7 @@ int findCenterCount() {
 
 	int count = 0;
 	bool isBlock = true;
-	int cx = (realSize_x2 + realSize_x1) / 2; // size.width / 2;
+	int cx = (realSize_x2 + realSize_x1) / 2;
 	int y = 0;
 
 	bool check = false;
@@ -424,26 +299,17 @@ void findRealSize() {
 
 			if (arr[y][x] == 1) {
 
-				if (x < x1) {
+				if (x < x1)
 					x1 = x;
-				}
-
-				if (x > x2) {
+				if (x > x2)
 					x2 = x;
-				}
-
-				if (y < y1) {
+				if (y < y1)
 					y1 = y;
-				}
-
-				if (y > y2) {
+				if (y > y2)
 					y2 = y;
-				}
 
 			}
-
 		}
-
 	}
 
 	realSize_x1 = x1;
@@ -490,36 +356,36 @@ void printfCurrentNumber() {
 
 void checkNumber() {
 
-	/*
-	bool isHorizontalSym;
-	bool isVerticalSym;
-	bool isHaveHorizontalLine;
-	int horizontalLocation;
-	bool isHaveBlockField;
-	int blockLocation;
-	int centerLineNumber;
+	/* 계산한 조건
+	bool isHorizontalSym; // 좌우대칭
+	bool isVerticalSym; // 상하대칭
+	bool isHaveHorizontalLine; // 수평선이 있는지
+	int horizontalLocation; // 수평선의 위치 0: 없음, 1: 상단, 2: 하단
+	bool isHaveBlockField; // 막힌 곳이 있는지
+	int blockLocation; // 막힌 곳의 위치 0: 없음, 1: 상단, 2: 하단
+	int centerLineNumber; // 중심선과 만나는 지점의 개수
 	*/
 
-	if (isHaveBlockField) {
+	if (isHaveBlockField) { // 막힌 곳이 있는지
 
-		if (blockLocation == 2) {
+		if (blockLocation == 2) { // 막힌 곳의 위치가 하단인지
 			printf("에상 숫자 : 6\n");
 			return;
 		}
 		else {
 
-			if (isHaveHorizontalLine) {
+			if (isHaveHorizontalLine) { // 수평선이 있는지
 				printf("예상 숫자 : 4\n");
 				return;
 			}
 			else {
-				if (!isHorizontalSym) {
+				if (!isHorizontalSym) { // 좌우대칭이 아닌지
 					printf("예상 숫자 : 9\n");
 					return;
 				}
 				else {
 
-					if (isVerticalSym) {
+					if (isVerticalSym) { // 상하대칭인지
 						printf("예상 숫자 : 0\n");
 						return;
 					}
@@ -536,23 +402,23 @@ void checkNumber() {
 	}
 	else {
 
-		if (centerLineNumber == 1) {
+		if (centerLineNumber == 1) { // 중신선과 1번 만나는지
 			printf("예상 숫자 : 1\n");
 			return;
 		}
 		else {
 
-			if (!isHaveHorizontalLine) {
+			if (!isHaveHorizontalLine) { // 수평선이 없는지
 				printf("예상 숫자 : 3\n");
 				return;
 			}
 			else {
-				if (horizontalLocation == 2) {
+				if (horizontalLocation == 2) { // 수평선의 위치가 하단인지
 					printf("예상 숫자 : 2\n");
 					return;
 				}
 				else {
-					if (centerLineNumber == 3) {
+					if (centerLineNumber == 3) { // 중심선과 3번 만나는지
 						printf("예상 숫자 : 5\n");
 						return;
 					}
@@ -566,56 +432,6 @@ void checkNumber() {
 		}
 
 	}
-
-	/*if (centerLineNumber == 1) {
-		printf("예상 숫자 : 1\n");
-		return;
-	}
-
-	if (isHorizontalSym == false && isVerticalSym == false && isHaveHorizontalLine == true && horizontalLocation == 2 && isHaveBlockField == false && blockLocation == 0 && centerLineNumber == 3) {
-		printf("예상 숫자 : 2\n");
-		return;
-	}
-
-	if (isHaveHorizontalLine == false && horizontalLocation == 0 && isHaveBlockField == false && blockLocation == 0 && centerLineNumber == 3) {
-		printf("예상 숫자 : 3\n");
-		return;
-	}
-
-	if (isHorizontalSym == false && isVerticalSym == false && isHaveHorizontalLine == true && horizontalLocation == 2 && isHaveBlockField == true && blockLocation == 1 && centerLineNumber == 2) {
-		printf("예상 숫자 : 4\n");
-		return;
-	}
-
-	if (isHorizontalSym == false && isVerticalSym == false && isHaveHorizontalLine == true && horizontalLocation == 1 && isHaveBlockField == false && blockLocation == 0 && centerLineNumber == 3) {
-		printf("예상 숫자 : 5\n");
-		return;
-	}
-
-	if (isHaveBlockField == true && blockLocation == 2) {
-		printf("예상 숫자 : 6\n");
-		return;
-	}
-
-	if (isHorizontalSym == false && isVerticalSym == false && isHaveHorizontalLine == true && horizontalLocation == 1 && isHaveBlockField == false && blockLocation == 0 && centerLineNumber == 2) {
-		printf("예상 숫자 : 7\n");
-		return;
-	}
-
-	if (isVerticalSym == false && isHorizontalSym == true) {
-		printf("예상 숫자 : 8\n");
-		return;
-	}
-
-	if (isHorizontalSym == false && isVerticalSym == false && isHaveBlockField == true && blockLocation == 1 && centerLineNumber == 3) {
-		printf("예상 숫자 : 9\n");
-		return;
-	}
-
-	if (isVerticalSym == true && isHorizontalSym == true) {
-		printf("예상 숫자 : 0\n");
-		return;
-	}*/
 
 	printf("찾지 못함\n");
 }
