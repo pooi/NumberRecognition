@@ -4,6 +4,7 @@
 
 #include<stdio.h>
 
+#define PI 3.141592
 #define MIN(a, b) (a<b)? a:b
 #define MAX(a, b) (a>b)? a:b
 
@@ -354,6 +355,77 @@ void printfCurrentNumber() {
 	fclose(f);
 }
 
+double toRadians(int angle) {
+	return (double)angle * PI / 180.0;
+}
+int calculateHorizontalOffset(int angle, int radius) {
+	return (int)round(cos(toRadians(angle)) * radius);
+}
+int calculateVerticalOffset(int angle, int radius) {
+	return (int)round(sin(toRadians(angle)) * radius);
+}
+double distance(double x1, double y1, double x2, double y2) {
+	return sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
+}
+
+void usingTrigonometric(char * fileName) {
+
+	int cx = (realSize_x2 + realSize_x1) / 2;//size.width / 2;
+	int cy = (realSize_y2 + realSize_y1) / 2;//size.height / 2;
+
+	FILE * f = fopen("graph.txt", "w");
+
+	int range = MIN((size.height - 1) / 2, (size.width - 1) / 2);
+
+	for (int i = 0; i <= 360; i++) {
+		double d = 0;
+		int x = 0;
+		int y = 0;
+
+		for (int r = 0; r <range; r++) {
+
+			int offsetX = calculateHorizontalOffset(i, r);
+			int offsetY = calculateVerticalOffset(i, r);
+
+			int x2 = cx + offsetX;
+			int y2 = cy + offsetY;
+
+			if (x2 > 0 && x2 < size.width-1 && y2 > 0 && y2 <size.height-1 && arr[y2][x2] == 1) {
+				x = x2;
+				y = y2;
+			}
+
+		}
+
+		d = distance(cx, cy, x, y);
+		fprintf(f, "%f\n", d);
+
+	}
+
+	fclose(f);
+
+	f = fopen("graph.txt", "r");
+
+	IplImage * graph = cvCreateImage(cvSize(361, 300), 8, 3);
+
+	CvScalar black = cvScalar(0, 0, 0);
+
+	for (int x = 0; x <= 360; x++) {
+
+		float d;
+		fscanf(f, "%f", &d);
+
+		for (int y = 0; y < d; y++) {
+			cvSet2D(graph, 300-y-1, x, black);
+		}
+
+	}
+
+	cvShowImage(fileName, graph);
+	cvWaitKey(100);
+
+}
+
 void checkNumber() {
 
 	/* 계산한 조건
@@ -510,6 +582,7 @@ int main()
 			}
 
 			loadImage(fileName);
+			//usingTrigonometric(fileName);
 
 		}
 		else if (mode == 2) {
@@ -524,6 +597,7 @@ int main()
 				fscanf(input, "%s", fileName);
 
 				loadImage(fileName);
+				//usingTrigonometric(fileName);
 
 				// printfCurrentNumber();
 			}
@@ -543,6 +617,7 @@ int main()
 				fscanf(input, "%s", fileName);
 
 				loadImage(fileName);
+				//usingTrigonometric(fileName);
 
 				// printfCurrentNumber();
 			}
@@ -562,6 +637,7 @@ int main()
 				fscanf(input, "%s", fileName);
 
 				loadImage(fileName);
+				//usingTrigonometric(fileName);
 
 				// printfCurrentNumber();
 			}
