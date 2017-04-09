@@ -562,9 +562,10 @@ int main()
 		printf("*             2. ±¼¸²             *\n");
 		printf("*            3. °ß°íµñ            *\n");
 		printf("*           4. ÇÑÄÄ¹éÁ¦           *\n");
-		printf("*             5. quit             *\n");
+		printf("*           5. Test Set           *\n");
+		printf("*             6. quit             *\n");
 		printf("***********************************\n");
-		printf("input : ");
+		printf("mode : ");
 		scanf("%d", &mode);
 
 		char fileName[15];
@@ -646,6 +647,26 @@ int main()
 			fclose(input);
 		}
 		else if (mode == 5) {
+			input = fopen("test\\input.txt", "r");
+			int count = 0;
+			fscanf(input, "%d", &count);
+
+			for (int k = 0; k < count; k++) {
+				init();
+				printf("==================================\n");
+
+				fscanf(input, "%s", fileName);
+
+				loadImage(fileName);
+				//usingTrigonometric(fileName);
+
+				// printfCurrentNumber();
+			}
+
+
+			fclose(input);
+		}
+		else if (mode == 6) {
 			break;
 		}
 		else {
