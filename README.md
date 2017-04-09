@@ -58,7 +58,7 @@ int main(){
 
 
 <ul>
-  <li> 굴림(Gullim)</li>
+  <li> 굴림(<i>Gullim</i>)</li>
 </ul>
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%EA%B5%B4%EB%A6%BC/0.png" width=10%>
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%EA%B5%B4%EB%A6%BC/1.png" width=10%>
@@ -72,7 +72,7 @@ int main(){
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%EA%B5%B4%EB%A6%BC/9.png" width=10%>
 
 <ul>
-  <li> 견고딕(Gyeongodic)</li>
+  <li> 견고딕(<i>Gyeongodic</i>)</li>
 </ul>
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%EA%B2%AC%EA%B3%A0%EB%94%95/0.png" width=10%>
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%EA%B2%AC%EA%B3%A0%EB%94%95/1.png" width=10%>
@@ -86,7 +86,7 @@ int main(){
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%EA%B2%AC%EA%B3%A0%EB%94%95/9.png" width=10%>
 
 <ul>
-  <li> 한컴백제M(Hankeom Baegje M)</li>
+  <li> 한컴백제M(<i>Hankeom Baegje M</i>)</li>
 </ul>
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%ED%95%9C%EC%BB%B4%EB%B0%B1%EC%A0%9C/0.png" width=10%>
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%ED%95%9C%EC%BB%B4%EB%B0%B1%EC%A0%9C/1.png" width=10%>
