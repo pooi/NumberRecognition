@@ -3,15 +3,24 @@
 <br>
 <br>
 
+## Overview
+
 미리 정해진 숫자를 인식하는 코드입니다.
 
 숫자는 굴림, 견고딕, 한컴백제M 폰트 3가지 종류로 이루어져있고, 정형화된 크기와 위치에 숫자가 위치합니다.
 
 이 프로그램은 위 3가지 폰트 및 정형화된 이미지에만 적용이 가능하므로 포함된 이미지가 아닌 다른 숫자가 적힌 이미지를 인식하려고 할 때에는 정확한 인식이 불가능할 수 있습니다.
 
+A code that recognizes a predetermined number.
+
+The numbers are composed of three types of <i>Gullim, Gyeongodic, and Hankeom Baegje M</i> fonts, and numbers are placed in standardized sizes and locations.
+
+This program is only applicable to the above three fonts and standardized images, so it may not be possible to recognize correctly when trying to recognize images with numbers other than the included images.
+
 <br><br>
 ## Feature
-> 숫자를 검출하기 위해 다음 8가지의 특징을 활용합니다.
+> 숫자를 검출하기 위해 다음 8가지의 특징을 활용합니다.<br>
+> The following eight features are used to detect numbers.
 
 <ul>
   <li> 좌우대칭
@@ -27,6 +36,7 @@
 <br><br>
 ## Usage
 > 이 프로그램을 사용하기 위해서는 opencv가 필요합니다.<br>
+> You need opencv to use this program.<br>
 > <a href="http://www.opencv.org/releases.html">http://www.opencv.org/releases.html</a><br>
 > 참고 : <a href="http://webnautes.tistory.com/716">http://webnautes.tistory.com/716</a>
 ```C
@@ -43,10 +53,12 @@ int main(){
 
 <br><br>
 ## Image
-> 숫자 인식에 활용되는 이미지는 아래와 같습니다.
+> 숫자 인식에 활용되는 이미지는 아래와 같습니다.<br>
+> The image used for digit recognition is shown below.
+
 
 <ul>
-  <li> 굴림
+  <li> 굴림(Gullim)</li>
 </ul>
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%EA%B5%B4%EB%A6%BC/0.png" width=10%>
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%EA%B5%B4%EB%A6%BC/1.png" width=10%>
@@ -60,7 +72,7 @@ int main(){
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%EA%B5%B4%EB%A6%BC/9.png" width=10%>
 
 <ul>
-  <li> 견고딕
+  <li> 견고딕(Gyeongodic)</li>
 </ul>
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%EA%B2%AC%EA%B3%A0%EB%94%95/0.png" width=10%>
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%EA%B2%AC%EA%B3%A0%EB%94%95/1.png" width=10%>
@@ -74,7 +86,7 @@ int main(){
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%EA%B2%AC%EA%B3%A0%EB%94%95/9.png" width=10%>
 
 <ul>
-  <li> 한컴백제M
+  <li> 한컴백제M(Hankeom Baegje M)</li>
 </ul>
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%ED%95%9C%EC%BB%B4%EB%B0%B1%EC%A0%9C/0.png" width=10%>
 <img src="https://github.com/pooi/NumberRecognition/blob/master/NumberRecognition/NumberRecognition/%ED%95%9C%EC%BB%B4%EB%B0%B1%EC%A0%9C/1.png" width=10%>
@@ -90,7 +102,7 @@ int main(){
 <br><br>
 ## Result
 ```
-# 굴림
+# 굴림(Gullim)
 ==================================
 input : 굴림\\0.png
 예상 숫자 : 0
@@ -122,7 +134,7 @@ input : 굴림\\8.png
 input : 굴림\\9.png
 예상 숫자 : 9
 
-# 견고딕
+# 견고딕(Gyeongodic)
 ==================================
 input : 견고딕\\0.png
 예상 숫자 : 0
@@ -154,7 +166,7 @@ input : 견고딕\\8.png
 input : 견고딕\\9.png
 예상 숫자 : 9
 
-# 한컴백제M
+# 한컴백제M(Hankeom Baegje M)
 ==================================
 input : 한컴백제\\0.png
 예상 숫자 : 0
