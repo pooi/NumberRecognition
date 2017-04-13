@@ -168,75 +168,80 @@ void findBottomHorizontalLine() {
 
 }
 
+// _y축 값을 기준으로 좌우로 1(검은색)이 있는지 파악
+// 좌우모두 1이 있으면 true반환, 둘 중 하나라도 없으면 false 반환
 bool isBlocked(int _x, int _y) {
 
-	bool isBlock = false;
+	bool isBlock = false; // 1 탐지를 위한 초기화
 
-	for (int x = _x; x < size.width; x++) {
+	for (int x = _x; x < size.width; x++) { // 중심으로부터 우측으로 검은색이 나올때까지 진행
+		if (arr[_y][x] == 1) { // 1이 있으면 값을 true로 변환
+			isBlock = true;
+		}
+	}
 
+	if (!isBlock) { // 1을 찾지 못했으면 false 반환
+		return isBlock;
+	}
+
+	isBlock = false; // 1 탐지를 위한 초기화
+
+	for (int x = _x; x >= 0; x--) { // 좌측으로 검사
 		if (arr[_y][x] == 1) {
 			isBlock = true;
 		}
 	}
 
-	if (!isBlock) {
+	if (!isBlock) { // 1을 찾지 못했으면 false 반환
 		return isBlock;
 	}
-
-	isBlock = false;
-
-	for (int x = _x; x >= 0; x--) {
-		if (arr[_y][x] == 1) {
-			isBlock = true;
-		}
-	}
-
-	if (!isBlock) {
-		return isBlock;
-	}
-
-	return true;
+	
+	return true; // 좌우모두 막혀있으므로 true 반환
 
 }
 
+// 막힌 곳이 있는지 체크하는 함수
 bool findBlockField() {
 
-	int count = 0;
-	bool isBlock = true;
-	int cx = (realSize_x2 + realSize_x1) / 2; // size.width / 2;
-	int y = 0;
+	int count = 0; // 몇번째에 막힌 곳이 있는지를 기록
+	bool isBlock = true; // 최종적으로 막힌곳이 있는지 확인을 위한 초기화
+	int cx = (realSize_x2 + realSize_x1) / 2;
+	int y = 0; // 위에서 부터 탐색
 
-	bool check = false;
-	bool start = false;
+	bool check = false; // 흰->검으로 바뀌는 지점을 찾기위한 변수 초기화
+	bool start = false; // 검->흰으로 바뀌는 지점 및 탐색을 시작하라고 알리는 변수 초기화
 
 	while (y < size.height - 1) {
 
+		// 흰->검으로 바뀌는 지점을 찾음
 		if (start == false && check == false && arr[y][cx] == 1) {
 			check = true;
-			y += 2; // 한컴백제 6때문에 임의로 2칸 전진
+			y += 2; // 안정적인 탐지를 위해 임의로 2칸 진입
 		}
 
+		// 흰->검으로 바뀌는 지점을 찾았을시 다시 검->흰으로 바뀌는 지점을 찾음
 		if (start == false && check == true && arr[y][cx] == 0) {
 			check = false;
-			start = true;
-			count += 1;
+			start = true; // 탐지를 시작하겠다고 알림
+			count += 1; // 검은부분을 한번 지났으므로 값 증가
 		}
 
+		// 막힌 곳 탐지 시작
 		if (start) {
 
-			if (arr[y + 1][cx] == 0 && isBlocked(cx, y)) {
-				isBlock = true;
+			if (arr[y + 1][cx] == 0 && isBlocked(cx, y)) { // 다음 행이 흰색이고 좌우가 막혀있으면 진입
+				isBlock = true; // 현재까지 막혀있다 표시
 			}
-			else if (arr[y + 1][cx] == 1 && isBlock) {
-				if (count <= 1) {
-					blockLocation = 1;
+			else if (arr[y + 1][cx] == 1 && isBlock) { // 다음 행이 검은색이고, 아직까지 막혀있었다면 진입
+				if (count <= 1) { // 검은 부분을 한번 지나고 막힌곳을 탐지했으므로
+					blockLocation = 1; // 막힌 위치가 상단이라고 표시 // 0: 없음, 1: 상단, 2: 하단
 				}
 				else {
-					blockLocation = 2;
+					blockLocation = 2; // 막힌 위치가 하단이라고 표시
 				}
-				return true;
+				return true; // 막힌곳을 하나 찾았으므로 함수 종료
 			}
-			else {
+			else { // 뚫린 곳이 있다면 탐지를 종료하고 다시 처음 조건으로 돌아가 재탐색 시작
 				start = false;
 				isBlock = false;
 			}
@@ -246,31 +251,34 @@ bool findBlockField() {
 		y += 1;
 	}
 
-	return isBlock;
+	return isBlock; // 막힌 곳을 찾지 못했을 경우
 
 }
 
+// 중심선과 검은 부분이 만나는 개수 탐지
 int findCenterCount() {
 
-	int count = 0;
-	bool isBlock = true;
+	int count = 0; // 검은 부분과 만난 횟수 기록
 	int cx = (realSize_x2 + realSize_x1) / 2;
 	int y = 0;
 
-	bool check = false;
+	bool check = false; // 흰->검으로 바뀌는 지점 탐지를 위한 변수 초기화
 	bool start = false;
 
 	while (y < size.height - 1) {
 
+		// 흰->검으로 바뀌는 지점 체크
 		if (start == false && check == false && arr[y][cx] == 1) {
-			check = true;
+			check = true; // 찾았을 경우 검->흰으로 바뀌는 지점을 찾기 위해 흰->검 탐지를 완료했다 표시
 		}
 
+		// 검->흰으로 바뀌는 지점 체크
 		if (start == false && check == true && arr[y][cx] == 0) {
 			check = false;
-			start = true;
-			count += 1;
+			start = true; // 검->흰으로 바뀌는 지점을 찾았으므로 다음 탐지할때까지 특별한 동작을 하지 못하도록 변수 변환
+			count += 1; // 검은 부분 하나를 찾았으므로 값 증가
 		}
+
 
 		if (start == true && arr[y + 1][cx] == 1) {
 
@@ -281,7 +289,7 @@ int findCenterCount() {
 		y += 1;
 	}
 
-	return count;
+	return count; // 만난 횟수 반환
 
 }
 
