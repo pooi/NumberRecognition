@@ -591,7 +591,11 @@ int main()
 			}
 
 			loadImage(fileName);
+
 			//usingTrigonometric(fileName);
+
+			cvShowImage(fileName, src);
+			cvWaitKey();
 
 		}
 		else if (mode == 2) {
@@ -606,6 +610,7 @@ int main()
 				fscanf(input, "%s", fileName);
 
 				loadImage(fileName);
+
 				//usingTrigonometric(fileName);
 
 				// printfCurrentNumber();
@@ -626,6 +631,7 @@ int main()
 				fscanf(input, "%s", fileName);
 
 				loadImage(fileName);
+
 				//usingTrigonometric(fileName);
 
 				// printfCurrentNumber();
@@ -646,6 +652,7 @@ int main()
 				fscanf(input, "%s", fileName);
 
 				loadImage(fileName);
+
 				//usingTrigonometric(fileName);
 
 				// printfCurrentNumber();
@@ -666,6 +673,7 @@ int main()
 				fscanf(input, "%s", fileName);
 
 				loadImage(fileName);
+
 				//usingTrigonometric(fileName);
 
 				// printfCurrentNumber();
