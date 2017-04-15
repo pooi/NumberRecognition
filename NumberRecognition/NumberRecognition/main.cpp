@@ -348,6 +348,7 @@ void init() {
 	centerLineNumber = 0;
 }
 
+// 현재 숫자 데이터를 파일로 출력
 void printfCurrentNumber() {
 	FILE *f;
 	f = fopen("a.txt", "w");
@@ -447,30 +448,45 @@ void checkNumber() {
 	*/
 
 	if (isHaveBlockField) { // 막힌 곳이 있는지
+		printf("막힌 곳 : 있음\n");
 
 		if (blockLocation == 2) { // 막힌 곳의 위치가 하단인지
-			printf("에상 숫자 : 6\n");
+			printf("막힌 곳 위치 : 하단\n");
+
+			printf("\n에상 숫자 : 6\n");
 			return;
 		}
 		else {
+			printf("막힌 곳 위치 : 상단\n");
 
 			if (isHaveHorizontalLine) { // 수평선이 있는지
-				printf("예상 숫자 : 4\n");
+				printf("수평선 존재 여부 : 있음\n");
+
+				printf("\n예상 숫자 : 4\n");
 				return;
 			}
 			else {
+				printf("수평선 존재 여부 : 없음\n");
+
 				if (!isHorizontalSym) { // 좌우대칭이 아닌지
-					printf("예상 숫자 : 9\n");
+					printf("좌우 대칭 : No\n");
+
+					printf("\n예상 숫자 : 9\n");
 					return;
 				}
 				else {
+					printf("좌우 대칭 : Yes\n");
 
 					if (isVerticalSym) { // 상하대칭인지
-						printf("예상 숫자 : 0\n");
+						printf("상하 대칭 : Yes\n");
+
+						printf("\n예상 숫자 : 0\n");
 						return;
 					}
 					else {
-						printf("예상 숫자 : 8\n");
+						printf("상하 대칭 : No\n");
+
+						printf("\n예상 숫자 : 8\n");
 						return;
 					}
 
@@ -481,29 +497,45 @@ void checkNumber() {
 
 	}
 	else {
+		printf("막힌 곳 : 없음\n");
 
 		if (centerLineNumber == 1) { // 중신선과 1번 만나는지
-			printf("예상 숫자 : 1\n");
+			printf("중심선과 만나는 개수 : 1번\n");
+
+			printf("\n예상 숫자 : 1\n");
 			return;
 		}
 		else {
+			printf("중심선과 만나는 개수 : 2번 이상\n");
 
 			if (!isHaveHorizontalLine) { // 수평선이 없는지
-				printf("예상 숫자 : 3\n");
+				printf("수평선 존재 여부 : 없음\n");
+
+				printf("\n예상 숫자 : 3\n");
 				return;
 			}
 			else {
+				printf("수평선 존재 여부 : 있음\n");
+
 				if (horizontalLocation == 2) { // 수평선의 위치가 하단인지
-					printf("예상 숫자 : 2\n");
+					printf("수평선의 위치 : 하단\n");
+
+					printf("\n예상 숫자 : 2\n");
 					return;
 				}
 				else {
+					printf("수평선의 위치 : 상단\n");
+
 					if (centerLineNumber == 3) { // 중심선과 3번 만나는지
-						printf("예상 숫자 : 5\n");
+						printf("중심선과 만나는 개수 : 3번\n");
+
+						printf("\n예상 숫자 : 5\n");
 						return;
 					}
 					else {
-						printf("예상 숫자 : 7\n");
+						printf("중심선과 만나는 개수 : 2번\n");
+
+						printf("\n예상 숫자 : 7\n");
 						return;
 					}
 				}
