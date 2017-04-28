@@ -198,9 +198,9 @@ input : 한컴백제\\8.png
 input : 한컴백제\\9.png
 예상 숫자 : 9
 ```
-<br>
+<br><br>
 ## License
-
+```
     Copyright 2016 Taewoo You
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -214,3 +214,4 @@ input : 한컴백제\\9.png
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+```
