@@ -615,6 +615,7 @@ int main()
 
 			printf("input directory : ");
 			scanf("%s", fileName);
+			init();
 
 			IplImage * temp = cvLoadImage(fileName);
 			if (temp == NULL) {
