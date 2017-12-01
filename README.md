@@ -23,14 +23,14 @@ This program is only applicable to the above three fonts and standardized images
 > The following eight features are used to detect numbers.
 
 <ul>
-  <li> 좌우대칭
-  <li> 상하대칭
-  <li> 수평선이 상단에 위치하는지
-  <li> 수평선이 하단에 위치하는지
-  <li> 수평선이 존재하지 않는지
-  <li> 막혀있는 곳이 있는지
-  <li> 막혀있는 곳이 있다면 상단인지 하단인지
-  <li> 중심선이 걸치는 부분이 몇 개인지
+  <li> 좌우대칭(Vertical Symmetry)
+  <li> 상하대칭(Horizontal Symmetry)
+  <li> 수평선이 상단에 위치하는지(Is the horizontal line at the top?)
+  <li> 수평선이 하단에 위치하는지(Is the horizontal line at the bottom?)
+  <li> 수평선이 존재하지 않는지(Horizontal line does not exist)
+  <li> 막혀있는 곳이 있는지(Is there a place that is closed?)
+  <li> 막혀있는 곳이 있다면 상단인지 하단인지(If there a place that is closed, that position is top or bottom?)
+  <li> 중심선이 걸치는 부분이 몇 개인지(How many overlap with the center line?)
 </ul>
 
 <br><br>
