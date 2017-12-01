@@ -34,6 +34,11 @@ This program is only applicable to the above three fonts and standardized images
 </ul>
 
 <br><br>
+
+## How to Detect
+Please refer to <a href="https://github.com/pooi/NumberRecognition/blob/master/Description.pdf">this</a> file.
+
+<br><br>
 ## Usage
 > 이 프로그램을 사용하기 위해서는 opencv가 필요합니다.<br>
 > You need opencv to use this program.<br>
